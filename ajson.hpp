@@ -2074,7 +2074,7 @@ namespace ajson
     {
       wt.write_str(member_ptr[pos].str, member_ptr[pos].len);
       wt.put(':');
-      json_impl<head>::template write(wt, val);
+      json_impl<head> write(wt, val);
       if (sizeof...(args))
       {
         wt.put(',');
@@ -2102,7 +2102,7 @@ namespace ajson
   {
     typedef typename std::remove_cv<ty>::type rty;
     write_tp wt(ss);
-    json_impl<rty>::template write(wt, val);
+    json_impl<rty> write(wt, val);
   }
 
   template<typename ty, typename stream_ty = ajson_file_stream, class write_tp = lite_write<stream_ty> >

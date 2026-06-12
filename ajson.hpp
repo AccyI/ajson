@@ -1324,14 +1324,14 @@ namespace ajson
     static inline void write(write_ty& wt, ty const& val)
     {
       typedef typename std::underlying_type<ty>::type raw_type;
-      json_impl<raw_type> write(wt, val);
+      json_impl<raw_type>:: write(wt, val);
     }
 
     template<typename write_ty>
     static inline void write_key(write_ty& wt, ty const& val)
     {
       typedef typename std::underlying_type<ty>::type raw_type;
-      json_impl<raw_type> write_key(wt, val);
+      json_impl<raw_type>:: write_key(wt, val);
     }
   };
 
@@ -1697,7 +1697,7 @@ namespace ajson
     int last = N - 1;
     for (int i = 0; i < N; ++i)
     {
-      json_impl<T> write(wt, val[i]);
+      json_impl<T>:: write(wt, val[i]);
       if (i < last)
         wt.put(',');
     }
@@ -1788,7 +1788,7 @@ namespace ajson
       auto sz = val.size();
       for (auto& i : val)
       {
-        json_impl<typename ty::value_type> write(wt, i);
+        json_impl<typename ty::value_type>:: write(wt, i);
         if (sz-- > 1)
           wt.put(',');
       }
@@ -1846,9 +1846,9 @@ namespace ajson
       auto sz = val.size();
       for (auto& i : val)
       {
-        json_impl<typename ty::key_type> write_key(wt, i.first);
+        json_impl<typename ty::key_type>:: write_key(wt, i.first);
         wt.put(':');
-        json_impl<typename ty::mapped_type> write(wt, i.second);
+        json_impl<typename ty::mapped_type>:: write(wt, i.second);
         if (sz-- > 1)
           wt.put(',');
       }
@@ -2074,7 +2074,7 @@ namespace ajson
     {
       wt.write_str(member_ptr[pos].str, member_ptr[pos].len);
       wt.put(':');
-      json_impl<head> write(wt, val);
+      json_impl<head>:: write(wt, val);
       if (sizeof...(args))
       {
         wt.put(',');
@@ -2102,7 +2102,7 @@ namespace ajson
   {
     typedef typename std::remove_cv<ty>::type rty;
     write_tp wt(ss);
-    json_impl<rty> write(wt, val);
+    json_impl<rty>:: write(wt, val);
   }
 
   template<typename ty, typename stream_ty = ajson_file_stream, class write_tp = lite_write<stream_ty> >
